@@ -1,37 +1,26 @@
 # API Docs: https://blueforcer.github.io/awtrix3/#/api
-import paho.mqtt.client as mqtt
-import logging
+import src.mqtt_message
+import src.nameday
+import src.date
+import src.sun
+import yaml
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-broker_address = "10.20.30.30"
-topic = "awtrix_1e7e38/custom/hello_world"
-message = {"draw":[  
- {"dc": [28, 4, 3, "#FF0000"]},  
- {"dr": [15, 4, 4, 4, "#0000FF"]},  
- {"dt": [0, 0, "Hello", "#00FF00"]}  
-]}  
+# LOAD CONFIG FILE
+def load_config():
+    with open('./config.yaml', 'r') as file:
+        config = yaml.safe_load(file)
+    return config
 
+# Set variables from config file
+config = load_config()
+broker_address = config['broker_address']
+user = config['user']
+password = config['password']
+homeassistant_api_url = config['homeassistant_api_url']
+homeassistant_api_token = config['homeassistant_api_token']
 
-def send_mqtt_message(broker_address, topic, message, username=None, password=None):
-    logging.info("Creating MQTT client")
-    client = mqtt.Client()
-    
-    if username and password:
-        logging.info("Setting username and password")
-        client.username_pw_set(username, password)
-    
-    logging.info(f"Connecting to broker at {broker_address}")
-    client.connect(broker_address)
-
-    logging.info(f"Clear the display")
-    client.publish("awtrix_1e7e38/custom/", "")
-
-    logging.info(f"Publishing message to topic {topic}")
-    client.publish(topic, message)
-    
-    logging.info("Disconnecting from broker")
-    client.disconnect()
-
-# Example usage with logging
-send_mqtt_message(broker_address=str(broker_address), topic=str(topic), message=str(message), username="mqttuser", password="mummo123")
+#src.mqtt_message.send_mqtt_clear_display(broker_address, user=user, password=password)
+src.date.send_date(broker_address, topic="awtrix_1e7e38/custom/date", user=user, password=password)
+src.nameday.send_nameday_message(broker_address, topic="awtrix_1e7e38/custom/nameday", user=user, password=password)
+src.sun.send_sunrise(broker_address, topic="awtrix_1e7e38/custom/sunrise", user=user, password=password, homeassistant_api_url=homeassistant_api_url, homeassistant_api_token=homeassistant_api_token)
+src.sun.send_sunset(broker_address, topic="awtrix_1e7e38/custom/sunset", user=user, password=password, homeassistant_api_url=homeassistant_api_url, homeassistant_api_token=homeassistant_api_token)

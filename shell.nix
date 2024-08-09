@@ -4,5 +4,9 @@ pkgs.mkShellNoCC {
   packages = with pkgs; [
     python312
     python312Packages.paho-mqtt
+    python312Packages.yamllint
+    python312Packages.requests
+    python312Packages.pytz
+    mosquitto
   ];
 }
