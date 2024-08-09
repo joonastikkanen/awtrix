@@ -21,7 +21,7 @@ def send_sunrise(broker_address, topic, user, password, homeassistant_api_url, h
         
         # Extract the time part
         time_only = local_time.strftime("%H:%M")
-        print(time_only)
+        #print(time_only)
     else:
         print(f"Failed to retrieve data: {sunrise_response.status_code}")
         return False
@@ -51,7 +51,7 @@ def send_sunset(broker_address, topic, user, password, homeassistant_api_url, ho
         
         # Extract the time part
         time_only = local_time.strftime("%H:%M")
-        print(time_only)
+        #print(time_only)
     else:
         print(f"Failed to retrieve data: {sun_setting.status_code}")
         return False
