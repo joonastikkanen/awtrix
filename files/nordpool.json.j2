@@ -6,10 +6,10 @@
 
     {#- Key matches x exactly -#}
     {%- if above is defined and dictionary[above] == x -%}
-    {%- set value = dictionary[above] -%}
+        {%- set value = dictionary[above] -%}
         {{ value }}
     {%- elif below is defined and dictionary[below] == x -%}
-    {%- set value = dictionary[below]-%}
+        {%- set value = dictionary[below]-%}
         {{ value }}
 
     {#- Interpolation between two values -#}
@@ -54,6 +54,14 @@
     {%- if hour+1 != 24 %},{%endif%}
     {%- endfor %}
 {%- endmacro %}
+
+{%- set color_dict = {
+    -0.1: '#001AFF',
+    0: '#00FF00',
+    10: '#D4FF00',
+    20: '#FF9900',
+    30: '#FF0000'
+} -%}
 
 {"draw":[ {{draw_price_lines()}}
 ],
