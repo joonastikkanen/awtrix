@@ -7,6 +7,7 @@ pkgs.mkShellNoCC {
     python312Packages.yamllint
     python312Packages.requests
     python312Packages.pytz
+    python312Packages.jinja2
     mosquitto
   ];
 }
