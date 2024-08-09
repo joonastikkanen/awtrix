@@ -20,7 +20,17 @@ def send_nameday_message(broker_address, topic, user, password):
     file_path = './files/namedays.csv'
     nameday = find_nameday(file_path, day, month)
     message = {
-        "text": "Nimipäivä tänään: %s" % nameday
+        "text": [
+            {
+                "t": "Nimipäivä tänään: ",
+                "c": "FFFFFF",
+            },
+            {
+                "t": "%s" % nameday,
+                "c": "00FF00",
+            }
+        ],
+        "repeat": 3
         }
     src.mqtt_message.send_mqtt_message(broker_address=str(broker_address), topic=str(topic), message=str(message), user=user, password=password)
     return True

@@ -32,6 +32,6 @@ def send_nordpool(broker_address, topic, user, password, homeassistant_api_url, 
         "price_text": price_text
         }
     message = template.render(context)
-    print(message)
+    #print(message)
     src.mqtt_message.send_mqtt_message(broker_address=str(broker_address), topic=str(topic), message=str(message), user=user, password=password)
     return True
