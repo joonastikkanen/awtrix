@@ -52,12 +52,7 @@ blueprint:
           unit_of_measurement: percent
           step: 10.0
           mode: slider
-      default: 3
-    icon:
-      name: Icon
-      description: "The icon to display"
-      selector:
-        text:
+      default: 80
     weather_unit:
       name: Weather unit
       description: "The unit of the temperature"
