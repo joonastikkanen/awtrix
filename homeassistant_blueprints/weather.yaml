@@ -69,6 +69,7 @@ variables:
   weather_max: '{{states(weather_max_temp_entity) | string}}'
   weather_min: '{{states(weather_min_temp_entity) | string}}'
   weather_unit: !input weather_unit
+  scroll_speed: !input scroll_speed
   payload: |-
     {
       "text": 'Weather today: {{ weather_condition }}, Max Temp.: {{ weather_max: }} {{ weather_unit }}, Min Temp.: {{ weather_min }} {{ weather_unit }}',
