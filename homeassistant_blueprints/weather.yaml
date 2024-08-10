@@ -62,7 +62,7 @@ blueprint:
 mode: restart
 variables:
   device_id: !input awtrix
-  awtrix: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) }}"
+  awtrix: "{{ device_attr(device_id, 'name_by_user')"
   repeat: !input repeat
   weather_entity: !input weather_entity
   weather_condition: '{{states(weather_entity) | string}}'
