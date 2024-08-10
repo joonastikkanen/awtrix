@@ -73,7 +73,7 @@ variables:
     {
       "text": "Weather today: {{ weather_condition }}, Max Temp.: {{ weather_max: }} {{ weather_unit }}, Min Temp.: {{ weather_min }} {{ weather_unit }}",
       "repeat": {{repeat}},
-      "scrollSpeed": {{ scroll_speed }},
+      "scrollSpeed": {{ scroll_speed }}
     }
 trigger:
 - platform: state
