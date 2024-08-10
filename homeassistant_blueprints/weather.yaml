@@ -4,6 +4,14 @@ blueprint:
   domain: automation
   author: tikinaattori
   input:
+    awtrix:
+      name: Awtrix Ulanzi Clock
+      description: "The Awtrix Ulanzi Clock entity"
+      selector:
+        device:
+          integration: mqtt
+          manufacturer: Blueforcer
+          model: AWTRIX
     weather_entity:
       name: Weather entity
       description: "The weather entity to use"
@@ -22,15 +30,6 @@ blueprint:
       selector:
         entity:
           domain: sensor
-    awtrix:
-      name: Ulanzi Clock
-      description: "The Ulanzi Clock entity"
-      selector:
-        entity:
-          device:
-            integration: mqtt
-            manufacturer: Blueforcer
-            model: AWTRIX
     repeat:
       name: Repeat
       description: How many times the message should be repeated
