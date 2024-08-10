@@ -11,7 +11,8 @@ blueprint:
         device:
           integration: mqtt
           manufacturer: Blueforcer
-          model: AWTRIX
+          model: AWTRIX 3
+          multiple: false
     weather_entity:
       name: Weather entity
       description: "The weather entity to use"
