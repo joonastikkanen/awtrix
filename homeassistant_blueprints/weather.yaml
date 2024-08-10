@@ -72,7 +72,7 @@ variables:
   scroll_speed: !input scroll_speed
   payload: |-
     {
-      "text": 'Weather today: {{ weather_condition }}, Max Temp.: {{ weather_max: }} {{ weather_unit }}, Min Temp.: {{ weather_min }} {{ weather_unit }}',
+      "text": 'Weather today: {{ weather_condition }}, Max Temp.: {{ weather_max }} {{ weather_unit }}, Min Temp.: {{ weather_min }} {{ weather_unit }}',
       "repeat": {{repeat}},
       "scrollSpeed": {{ scroll_speed }}
     }
