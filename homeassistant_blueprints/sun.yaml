@@ -6,7 +6,6 @@ blueprint:
   input:
     sunrise_sunset:
           name: Sunrise/Sunset
-          icon: mdi:sun-clock
           description: Sunrise or Sunset automation
           selector:
             select:
