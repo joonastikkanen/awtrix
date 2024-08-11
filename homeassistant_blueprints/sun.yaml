@@ -4,6 +4,15 @@ blueprint:
   domain: automation
   author: tikinaattori
   input:
+    awtrix:
+      name: Awtrix Ulanzi Clock
+      description: "The Awtrix Ulanzi Clock entity"
+      selector:
+        device:
+          integration: mqtt
+          manufacturer: Blueforcer
+          model: AWTRIX 3
+          multiple: false
     sunrise_sunset:
       name: Sunrise/Sunset
       description: Sunrise or Sunset automation
@@ -26,6 +35,8 @@ blueprint:
       default: "44904"
 mode: restart
 variables:
+  device_id: !input awtrix
+  awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
   sunrise_sunset: !input sunrise_sunset
   sensor: !input sensor
   sunrise_sunset_time: '{{states(sensor) | string }}'
