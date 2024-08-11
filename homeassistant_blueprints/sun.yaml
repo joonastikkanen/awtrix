@@ -1,0 +1,51 @@
+blueprint:
+  name: "AWTRIX Sunrise/Sunset Display"
+  description: "Display todays Sunrise/Sunset time on the Ulanzi Clock on Awtrix firmware"
+  domain: automation
+  author: tikinaattori
+  input:
+    sunrise_sunset:
+          name: Sunrise/Sunset
+          icon: mdi:sun-clock
+          description: Sunrise or Sunset automation
+          input:
+            sunrise:
+              name: Sunrise
+            sunset:
+              name: Sunset
+    sensor:
+      name: Sunrise/Sunset
+      description: "The sensor for the sunrise or sunset"
+      selector:
+        entity:
+          domain: sensor
+    icon:
+      name: Icon
+      description: "Icon of the sunset or sunrise"
+      selector:
+        text:
+      default: "44904"
+mode: restart
+variables:
+  sunrise_sunset: !input sunrise_sunset
+  sensor: !input sensor
+  sunrise_sunset_time: '{{states(sensor) | string }}'
+  icon: !input icon
+  payload: |-
+    {
+      "icon": "{{ icon }}",
+      "text": "{{ sunrise_sunset_time |format_datetime('%H:%M') }}"
+    }
+trigger:
+- platform: state
+  entity_id: !input sensor
+  id: Changes
+  enabled: true
+condition: []
+action:
+  - service: mqtt.publish
+    data:
+      qos: 0
+      retain: false
+      topic: "{{ awtrix_display }}/custom/{{ sunrise_sunset }}"
+      payload: '{{ payload }}'
