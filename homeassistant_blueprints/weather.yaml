@@ -78,7 +78,7 @@ variables:
     }
 trigger:
 - platform: state
-  entity_id: !input awtrix
+  entity_id: !input weather_entity
   id: Changes
   enabled: true
 condition: []
