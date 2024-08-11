@@ -62,7 +62,7 @@ blueprint:
 mode: restart
 variables:
   device_id: !input awtrix
-  awtrix: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
+  awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
   repeat: !input repeat
   weather_entity: !input weather_entity
   weather_condition: '{{states(weather_entity) | string }}'
@@ -87,5 +87,5 @@ action:
     data:
       qos: 0
       retain: false
-      topic: "{{ awtrix }}/custom/weather"
+      topic: "{{ awtrix_display }}/custom/weather"
       payload: '{{ payload }}'
