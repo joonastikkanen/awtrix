@@ -33,7 +33,7 @@ variables:
   payload: |-
     {
       "icon": "{{ icon }}",
-      "text": "{{ sunrise_sunset_time |format_datetime('%H:%M') }}"
+      "text": "{{ sunrise_sunset_time |strftime('%H:%M') }}"
     }
 trigger:
 - platform: state
