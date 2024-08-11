@@ -5,13 +5,13 @@ blueprint:
   author: tikinaattori
   input:
     sunrise_sunset:
-          name: Sunrise/Sunset
-          description: Sunrise or Sunset automation
-          selector:
-            select:
-              options:
-                - "sunrise"
-                - "sunset"
+      name: Sunrise/Sunset
+      description: Sunrise or Sunset automation
+      selector:
+        select:
+          options:
+            - "sunrise"
+            - "sunset"
     sensor:
       name: Sunrise/Sunset
       description: "The sensor for the sunrise or sunset"
