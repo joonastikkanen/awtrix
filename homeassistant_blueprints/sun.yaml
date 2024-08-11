@@ -9,9 +9,10 @@ blueprint:
           icon: mdi:sun-clock
           description: Sunrise or Sunset automation
           selector:
-            options:
-              - "sunrise"
-              - "sunset"
+            select:
+              options:
+                - "sunrise"
+                - "sunset"
     sensor:
       name: Sunrise/Sunset
       description: "The sensor for the sunrise or sunset"
