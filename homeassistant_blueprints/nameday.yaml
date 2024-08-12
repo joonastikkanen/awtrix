@@ -69,7 +69,7 @@ variables:
     {
       "text": [
           {
-              "t": {{ nameday_index_text }},",
+              "t": "{{ nameday_index_text }}",
               "c": "{{ nameday_index_color }}",
           },
           {
