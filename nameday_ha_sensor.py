@@ -1,16 +1,6 @@
 import src.nameday
 import datetime
-import yaml
-
-# LOAD CONFIG FILE
-def load_config():
-    with open('./config.yaml', 'r') as file:
-        config = yaml.safe_load(file)
-    return config
-
-# Set variables from config file
-config = load_config()
-nameday_csv_path = config['nameday_csv_path']
+import argparse
 
 def get_nameday(nameday_csv_path):
     # Set day and month variables
@@ -19,7 +9,18 @@ def get_nameday(nameday_csv_path):
     month = now.strftime("%m")
     file_path = nameday_csv_path
     nameday = src.nameday.find_nameday(file_path, day, month)
-    print(nameday)
     return nameday
 
-get_nameday()
+
+if __name__ == "__main__":
+    # Create the parser
+    parser = argparse.ArgumentParser(description="Get nameday from CSV file.")
+    
+    # Add the arguments
+    parser.add_argument("nameday_csv_path", type=str, help="Path to the nameday CSV file")
+    
+    # Parse the arguments
+    args = parser.parse_args()
+    
+    # Call the function with the provided argument
+    print(get_nameday(args.nameday_csv_path))
