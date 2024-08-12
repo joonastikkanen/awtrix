@@ -43,15 +43,28 @@ blueprint:
       selector:
         text:
       default: 3
+    scroll_speed:
+      name: Scroll Speed
+      description: How fast the message should scroll
+      selector:
+        number:
+          min: 0.0
+          max: 100.0
+          unit_of_measurement: percent
+          step: 10.0
+          mode: slider
+      default: 80
 mode: restart
 variables:
   device_id: !input awtrix
   awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
   sensor: !input sensor
   nameday: '{{states(sensor) | string }}'
+  nameday_index_text: !input nameday_index_text
   nameday_index_color: !input nameday_index_color
   nameday_color: !input nameday_color
   repeat: !input repeat
+  scroll_speed: !input scroll_speed
   payload: |-
     {
       "text": [
@@ -64,7 +77,8 @@ variables:
               "c": "{{ nameday_color }}",
           }
       ],
-      "repeat": {{ repeat }}
+      "repeat": {{ repeat }},
+      "scrollSpeed": {{ scroll_speed }}
     }
 trigger:
 - platform: state
