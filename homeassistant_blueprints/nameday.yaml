@@ -53,7 +53,6 @@ variables:
   nameday_index_color: !input nameday_index_color
   nameday_color: !input nameday_color
   repeat: !input repeat
-  duration: !input duration
   payload: |-
     {
       "text": [
