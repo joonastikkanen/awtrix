@@ -57,12 +57,12 @@ variables:
     {
       "text": [
           {
-              "t": "{{ nameday_index_text }}",
-              "c": "{{ nameday_index_color }}",
+              "t": "{{ nameday_index_text | string }}",
+              "c": "{{ nameday_index_color | string }}"
           },
           {
-              "t": "{{ nameday}}",
-              "c": "{{ nameday_color }}",
+              "t": "{{ nameday | string}}",
+              "c": "{{ nameday_color | string }}"
           }
       ],
       "repeat": {{ repeat }},
