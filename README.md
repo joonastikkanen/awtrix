@@ -18,3 +18,15 @@ homeassistant_api_token: <HOMEASSISTANT BEARER TOKEN>
 $ mosquitto_pub -h <broker_address> -t <topic> -m <message> -u <username> -P <password>
 ```
 
+## Nameday Homeassistant sensor
+
+Put these lines to configuration.yml
+
+```yaml
+# Python AWTRIX nameday Display
+command_line:
+- sensor:
+    name: AWTRIX Nameday Python Script
+    command: python scripts/awtrix/nameday_ha_sensor.py scripts/awtrix/files/namedays.csv
+    scan_interval: 43200 # update twice a day
+```

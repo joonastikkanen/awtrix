@@ -1,0 +1,81 @@
+blueprint:
+  name: "AWTRIX Finnish Nameday Display"
+  description: "Display todays Finnish nameday on the Ulanzi Clock on Awtrix firmware"
+  domain: automation
+  author: tikinaattori
+  input:
+    awtrix:
+      name: Awtrix Ulanzi Clock
+      description: "The Awtrix Ulanzi Clock entity"
+      selector:
+        device:
+          integration: mqtt
+          manufacturer: Blueforcer
+          model: AWTRIX 3
+          multiple: false
+    sensor:
+      name: Python script sensor
+      description: "The sensor for Python script"
+      selector:
+        entity:
+          domain: sensor
+    nameday_index_text:
+      name: Nameday index text
+      description: "The text before the nameday"
+      selector:
+        text:
+      default: "Nimipäivä tänään: "
+    nameday_index_color:
+      name: Nameday color
+      description: "The color of the nameday text"
+      selector:
+        text:
+      default: "FFFFFF"
+    nameday_color:
+      name: Nameday color
+      description: "The color of the nameday text"
+      selector:
+        text:
+      default: "00FF00"
+    repeat:
+      name: Repeat
+      description: "The number of times the text is repeated"
+      selector:
+        text:
+      default: 3
+mode: restart
+variables:
+  device_id: !input awtrix
+  awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
+  sensor: !input sensor
+  nameday: '{{states(sensor) | string }}'
+  nameday_index_color: !input nameday_index_color
+  nameday_color: !input nameday_color
+  repeat: !input repeat
+  payload: |-
+    {
+      "text": [
+          {
+              "t": {{ nameday_index_text }},",
+              "c": "{{ nameday_index_color }}",
+          },
+          {
+              "t": "{{ nameday}}",
+              "c": "{{ nameday_color }}",
+          }
+      ],
+      "repeat": {{ repeat }}
+    }
+trigger:
+- platform: state
+  entity_id: !input sensor
+  id: Changes
+  enabled: true
+condition: []
+action:
+  - service: mqtt.publish
+    data:
+      qos: 0
+      retain: false
+      topic: "{{ awtrix_display }}/custom/nameday"
+      payload: '{{ payload }}'
