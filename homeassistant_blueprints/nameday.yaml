@@ -65,7 +65,7 @@ variables:
               "c": "{{ nameday_color | string }}"
           }
       ],
-      "repeat": {{ repeat }},
+      "repeat": {{ repeat }}
     }
 trigger:
 - platform: state
