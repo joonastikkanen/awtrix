@@ -18,8 +18,10 @@ blueprint:
       description: "The weather condition sensor to use"
       selector:
         entity:
-          filter:
-            integration: accuweather,openweathermap
+          include_entities:
+            - sensor.*_condition_*
+            - sensor.openweathermap_condition
+            - sensor.openweathermap_forecast_condition
     weather_max_temp_entity:
       name: Max Temp. entity
       description: "The entity for the maximum temperature"
