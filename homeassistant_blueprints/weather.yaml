@@ -13,12 +13,14 @@ blueprint:
           manufacturer: Blueforcer
           model: AWTRIX 3
           multiple: false
-    weather_entity:
-      name: Weather entity
-      description: "The weather entity to use"
+    weather_sensor:
+      name: Weather Condition sensor
+      description: "The weather condition sensor to use"
       selector:
         entity:
-          domain: weather
+          filter:
+            integration: accuweather, openweathermap
+            domain: sensor
     weather_max_temp_entity:
       name: Max Temp. entity
       description: "The entity for the maximum temperature"
@@ -64,8 +66,8 @@ variables:
   device_id: !input awtrix
   awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
   repeat: !input repeat
-  weather_entity: !input weather_entity
-  weather_condition: '{{states(weather_entity) | string }}'
+  weather_sensor: !input weather_sensor
+  weather_condition: '{{states(weather_sensor) | string }}'
   weather_max_temp: !input weather_max_temp_entity
   weather_min_temp: !input weather_min_temp_entity
   weather_max: '{{states(weather_max_temp) | string }}'
@@ -80,7 +82,7 @@ variables:
     }
 trigger:
 - platform: state
-  entity_id: !input weather_entity
+  entity_id: !input weather_sensor
   id: Changes
   enabled: true
 condition: []
