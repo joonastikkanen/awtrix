@@ -19,8 +19,7 @@ blueprint:
       selector:
         entity:
           filter:
-            integration: accuweather, openweathermap
-            domain: sensor
+            integration: accuweather,openweathermap
     weather_max_temp_entity:
       name: Max Temp. entity
       description: "The entity for the maximum temperature"
