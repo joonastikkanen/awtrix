@@ -33,6 +33,17 @@ blueprint:
       selector:
         text:
       default: "44904"
+    message_duration:
+      name: Message Duration
+      description: How long the message should be displayed
+      selector:
+        number:
+          min: 0.0
+          max: 30.0
+          unit_of_measurement: seconds
+          step: 1.0
+          mode: slider
+      default: 10
 mode: restart
 variables:
   device_id: !input awtrix
@@ -41,10 +52,12 @@ variables:
   sensor: !input sensor
   sunrise_sunset_time: '{{states(sensor) | string }}'
   icon: !input icon
+  message_duration: !input repeat
   payload: |-
     {
       "icon": "{{ icon }}",
       "text": "{{ as_timestamp(sunrise_sunset_time) | timestamp_custom('%H:%M') }}"
+      "duration": "{{ message_duration }}"
     }
 trigger:
 - platform: state
