@@ -19,7 +19,11 @@ blueprint:
       selector:
         entity:
           include_entities:
-            - sensor.koti_condition_*
+            - sensor.koti_condition_day_0
+            - sensor.koti_condition_day_1
+            - sensor.koti_condition_day_2
+            - sensor.koti_condition_day_3
+            - sensor.koti_condition_day_4
             - sensor.openweathermap_condition
             - sensor.openweathermap_forecast_condition
     weather_max_temp_entity:
