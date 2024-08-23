@@ -13,6 +13,12 @@ blueprint:
           manufacturer: Blueforcer
           model: AWTRIX 3
           multiple: false
+    weather_text:
+      name: Weather text
+      description: "The text to display"
+      selector:
+        text:
+      default: "Weather today:"
     weather_sensor:
       name: Weather Condition sensor
       description: "The weather condition sensor to use"
@@ -71,6 +77,7 @@ variables:
   device_id: !input awtrix
   awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
   repeat: !input repeat
+  weather_text: !input weather_text
   weather_sensor: !input weather_sensor
   weather_condition: '{{states(weather_sensor) | string }}'
   weather_max_temp: !input weather_max_temp_entity
@@ -81,7 +88,7 @@ variables:
   scroll_speed: !input scroll_speed
   payload: |-
     {
-      "text": 'Weather today: {{ weather_condition }}, Max Temp.: {{ weather_max }} {{ weather_unit }}, Min Temp.: {{ weather_min }} {{ weather_unit }}',
+      "text": '{{ weather_text }} {{ weather_condition }}, Max Temp.: {{ weather_max }} {{ weather_unit }}, Min Temp.: {{ weather_min }} {{ weather_unit }}',
       "repeat": {{repeat}},
       "scrollSpeed": {{ scroll_speed }}
     }
