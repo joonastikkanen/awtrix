@@ -101,7 +101,7 @@ variables:
     }
 trigger:
 - platform: state
-  entity_id: {{ weather_sensor }}
+  entity_id: !input weather_sensor
   id: Changes
   enabled: true
 condition: []
