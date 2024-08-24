@@ -19,6 +19,12 @@ blueprint:
       selector:
         text:
       default: "Weather today:"
+    awtrix_custom_app_name:
+      name: MQTT Topic Path
+      description: "The unique name of the custom app"
+      selector:
+        text:
+      default: "weather"
     weather_sensor:
       name: Weather Condition sensor
       description: "The weather condition sensor to use"
@@ -76,6 +82,7 @@ mode: restart
 variables:
   device_id: !input awtrix
   awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
+  awtrix_custom_app_name: !input awtrix_custom_app_name
   repeat: !input repeat
   weather_text: !input weather_text
   weather_sensor: !input weather_sensor
@@ -94,7 +101,7 @@ variables:
     }
 trigger:
 - platform: state
-  entity_id: !input weather_sensor
+  entity_id: {{ weather_sensor }}
   id: Changes
   enabled: true
 condition: []
@@ -103,5 +110,5 @@ action:
     data:
       qos: 0
       retain: false
-      topic: "{{ awtrix_display }}/custom/weather"
+      topic: "{{ awtrix_display }}/custom/{{ awtrix_custom_app_name }}"
       payload: '{{ payload }}'
