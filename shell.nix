@@ -8,6 +8,8 @@ pkgs.mkShellNoCC {
     python312Packages.requests
     python312Packages.pytz
     python312Packages.jinja2
+    python312Packages.pip
+    python312Packages.libxml2
     mosquitto
   ];
 }
