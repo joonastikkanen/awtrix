@@ -9,10 +9,11 @@ blueprint:
       description: "The Awtrix Ulanzi Clock entity"
       selector:
         device:
-          integration: mqtt
-          manufacturer: Blueforcer
-          model: AWTRIX 3
-          multiple: false
+          filter:
+            - integration: mqtt
+              manufacturer: Blueforcer
+              model: AWTRIX 3
+
     sunrise_sunset:
       name: Sunrise/Sunset
       description: Sunrise or Sunset automation
@@ -26,7 +27,8 @@ blueprint:
       description: "The sensor for the sunrise or sunset"
       selector:
         entity:
-          domain: sensor
+          filter:
+            - domain: sensor
     icon:
       name: Icon
       description: "Icon of the sunset or sunrise"
@@ -50,7 +52,7 @@ variables:
   awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
   sunrise_sunset: !input sunrise_sunset
   sensor: !input sensor
-  sunrise_sunset_time: '{{states(sensor) | string }}'
+  sunrise_sunset_time: "{{states(sensor) | string }}"
   icon: !input icon
   message_duration: !input repeat
   payload: |-
@@ -60,15 +62,15 @@ variables:
       "duration": "{{ message_duration }}"
     }
 trigger:
-- platform: state
-  entity_id: !input sensor
-  id: Changes
-  enabled: true
+  - trigger: state
+    entity_id: !input sensor
+    id: Changes
+    enabled: true
 condition: []
 action:
-  - service: mqtt.publish
+  - action: mqtt.publish
     data:
       qos: 0
       retain: false
       topic: "{{ awtrix_display }}/custom/{{ sunrise_sunset }}"
-      payload: '{{ payload }}'
+      payload: "{{ payload }}"
