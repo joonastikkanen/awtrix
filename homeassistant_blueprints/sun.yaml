@@ -54,7 +54,7 @@ variables:
   sensor: !input sensor
   sunrise_sunset_time: "{{states(sensor) | string }}"
   icon: !input icon
-  message_duration: !input repeat
+  message_duration: !input message_duration
   payload: |-
     {
       "icon": "{{ icon }}",
