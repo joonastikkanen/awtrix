@@ -37,8 +37,6 @@ variables:
   awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
   sensor: !input sensor
   flagday: '{{states(sensor) | string }}'
-  flagday_index_text: !input flagday_index_text
-  flagday_index_color: !input flagday_index_color
   flagday_color: !input flagday_color
   repeat: !input repeat
   payload: |-
