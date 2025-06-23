@@ -10,7 +10,7 @@ def get_nameday(nameday_csv_path):
     file_path = nameday_csv_path
     nameday = src.nameday.find_nameday(file_path, day, month)
     if not nameday:
-        return "No flag day"
+        return "Ei lipputuspäivää tänään."
     return nameday
 
 
