@@ -19,18 +19,6 @@ blueprint:
       selector:
         entity:
           domain: sensor
-    flagday_index_text:
-      name: flagday index text
-      description: "The text before the flagday"
-      selector:
-        text:
-      default: "Nimipäivä tänään: "
-    flagday_index_color:
-      name: flagday color
-      description: "The color of the flagday text"
-      selector:
-        text:
-      default: "FFFFFF"
     flagday_color:
       name: flagday color
       description: "The color of the flagday text"
@@ -56,16 +44,7 @@ variables:
   payload: |-
     {
       "icon": "10076",
-      "text": [
-          {
-              "t": "{{ flagday_index_text | string }}",
-              "c": "{{ flagday_index_color | string }}"
-          },
-          {
-              "t": "{{ flagday | string}}",
-              "c": "{{ flagday_color | string }}"
-          }
-      ],
+      "text": "{{ flagday | string}}",
       "repeat": {{ repeat }}
     }
 trigger:
