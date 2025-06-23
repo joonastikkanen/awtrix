@@ -58,7 +58,7 @@ variables:
   payload: |-
     {
       "icon": "{{ icon }}",
-      "text": "{{ as_timestamp(sunrise_sunset_time) | timestamp_custom('%H:%M') }}"
+      "text": "{{ as_timestamp(sunrise_sunset_time) | timestamp_custom('%H:%M') }},"
       "duration": "{{ message_duration }}"
     }
 trigger:
