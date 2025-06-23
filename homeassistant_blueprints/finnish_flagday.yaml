@@ -1,6 +1,6 @@
 blueprint:
-  name: "AWTRIX Finnish Nameday Display"
-  description: "Display todays Finnish nameday on the Ulanzi Clock on Awtrix firmware"
+  name: "AWTRIX Finnish Flag Day Display"
+  description: "Display todays Finnish Flag Day on the Ulanzi Clock on Awtrix firmware"
   domain: automation
   author: tikinaattori
   input:
@@ -19,21 +19,21 @@ blueprint:
       selector:
         entity:
           domain: sensor
-    nameday_index_text:
-      name: Nameday index text
-      description: "The text before the nameday"
+    flagday_index_text:
+      name: flagday index text
+      description: "The text before the flagday"
       selector:
         text:
       default: "Nimipäivä tänään: "
-    nameday_index_color:
-      name: Nameday color
-      description: "The color of the nameday text"
+    flagday_index_color:
+      name: flagday color
+      description: "The color of the flagday text"
       selector:
         text:
       default: "FFFFFF"
-    nameday_color:
-      name: Nameday color
-      description: "The color of the nameday text"
+    flagday_color:
+      name: flagday color
+      description: "The color of the flagday text"
       selector:
         text:
       default: "00FF00"
@@ -48,21 +48,22 @@ variables:
   device_id: !input awtrix
   awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
   sensor: !input sensor
-  nameday: '{{states(sensor) | string }}'
-  nameday_index_text: !input nameday_index_text
-  nameday_index_color: !input nameday_index_color
-  nameday_color: !input nameday_color
+  flagday: '{{states(sensor) | string }}'
+  flagday_index_text: !input flagday_index_text
+  flagday_index_color: !input flagday_index_color
+  flagday_color: !input flagday_color
   repeat: !input repeat
   payload: |-
     {
+      "icon": "10076",
       "text": [
           {
-              "t": "{{ nameday_index_text | string }}",
-              "c": "{{ nameday_index_color | string }}"
+              "t": "{{ flagday_index_text | string }}",
+              "c": "{{ flagday_index_color | string }}"
           },
           {
-              "t": "{{ nameday | string}}",
-              "c": "{{ nameday_color | string }}"
+              "t": "{{ flagday | string}}",
+              "c": "{{ flagday_color | string }}"
           }
       ],
       "repeat": {{ repeat }}
@@ -78,5 +79,5 @@ action:
     data:
       qos: 0
       retain: false
-      topic: "{{ awtrix_display }}/custom/nameday"
+      topic: "{{ awtrix_display }}/custom/flagday"
       payload: '{{ payload }}'

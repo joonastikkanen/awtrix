@@ -168,7 +168,7 @@ trigger:
   enabled: true
 condition: []
 action:
-  - service: mqtt.publish
+  - action: mqtt.publish
     data:
       qos: 0
       retain: false
