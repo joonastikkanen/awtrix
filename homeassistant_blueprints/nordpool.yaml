@@ -41,6 +41,8 @@ blueprint:
         Use 1 if you want the value to be unchanged."
       selector:
         number:
+          min: 0
+          max: 100
       default: 100
     color_matrix_json:
       name: Color Map
