@@ -1,55 +1,39 @@
 blueprint:
-  name: "AWTRIX Weather Display"
-  description: "Display todays weather on the Ulanzi Clock on Awtrix firmware"
+  name: AWTRIX Weather Display
+  description: Display todays weather on the Ulanzi Clock on Awtrix firmware
   domain: automation
   author: tikinaattori
   input:
     awtrix:
       name: Awtrix Ulanzi Clock
-      description: "The Awtrix Ulanzi Clock entity"
+      description: The Awtrix Ulanzi Clock entity
       selector:
         device:
-          integration: mqtt
-          manufacturer: Blueforcer
-          model: AWTRIX 3
-          multiple: false
+          filter:
+            - integration: mqtt
+              manufacturer: Blueforcer
+              model: AWTRIX 3
     weather_text:
       name: Weather text
-      description: "The text to display"
+      description: The text to display
       selector:
-        text:
+        text: {}
       default: "Weather today:"
     awtrix_custom_app_name:
       name: MQTT Topic Path
-      description: "The unique name of the custom app"
+      description: The unique name of the custom app
       selector:
-        text:
-      default: "weather"
+        text: {}
+      default: weather
     weather_sensor:
       name: Weather Condition sensor
-      description: "The weather condition sensor to use"
+      description: The weather condition sensor to use
       selector:
         entity:
           include_entities:
-            - sensor.koti_condition_day_0
-            - sensor.koti_condition_day_1
-            - sensor.koti_condition_day_2
-            - sensor.koti_condition_day_3
-            - sensor.koti_condition_day_4
-            - sensor.openweathermap_condition
-            - sensor.openweathermap_forecast_condition
-    weather_max_temp_entity:
-      name: Max Temp. entity
-      description: "The entity for the maximum temperature"
-      selector:
-        entity:
-          domain: sensor
-    weather_min_temp_entity:
-      name: Min Temp. entity
-      description: "The entity for the minimum temperature"
-      selector:
-        entity:
-          domain: sensor
+            - weather.forecast_home
+            - weather.openweathermap
+          multiple: false
     repeat:
       name: Repeat
       description: How many times the message should be repeated
@@ -72,43 +56,32 @@ blueprint:
           step: 10.0
           mode: slider
       default: 80
-    weather_unit:
-      name: Weather unit
-      description: "The unit of the temperature"
-      selector:
-        text:
-      default: "°C"
+  source_url: https://github.com/joonastikkanen/awtrix/blob/main/homeassistant_blueprints%2Fweather.yaml
 mode: restart
 variables:
   device_id: !input awtrix
-  awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
+  awtrix_display:
+    "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id,
+    'name_by_user'), device_attr(device_id, 'name') ) | string }}"
   awtrix_custom_app_name: !input awtrix_custom_app_name
   repeat: !input repeat
   weather_text: !input weather_text
   weather_sensor: !input weather_sensor
-  weather_condition: '{{states(weather_sensor) | string }}'
-  weather_max_temp: !input weather_max_temp_entity
-  weather_min_temp: !input weather_min_temp_entity
-  weather_max: '{{states(weather_max_temp) | string }}'
-  weather_min: '{{states(weather_min_temp) | string }}'
-  weather_unit: !input weather_unit
+  weather_condition: "{{states(weather_sensor) | string }}"
+  weather_temp: "{{ state_attr(weather_sensor, 'temperature')}}"
+  weather_unit: "{{ state_attr(weather_sensor, 'temperature_unit')}}"
   scroll_speed: !input scroll_speed
-  payload: |-
-    {
-      "text": '{{ weather_text }} {{ weather_condition }}, Max Temp.: {{ weather_max }} {{ weather_unit }}, Min Temp.: {{ weather_min }} {{ weather_unit }}',
-      "repeat": {{repeat}},
-      "scrollSpeed": {{ scroll_speed }}
-    }
-trigger:
-- platform: state
-  entity_id: !input weather_sensor
-  id: Changes
-  enabled: true
+  payload: "{\n  \"text\": '{{ weather_text }} {{ weather_condition }}, {{ weather_temp }} {{ weather_unit }}',\n  \"repeat\": {{repeat}},\n  \"scrollSpeed\": {{ scroll_speed }}\n}"
+triggers:
+  - trigger: state
+    entity_id: !input weather_sensor
+    id: Changes
+    enabled: true
 condition: []
-action:
-  - service: mqtt.publish
+actions:
+  - action: mqtt.publish
     data:
       qos: 0
       retain: false
       topic: "{{ awtrix_display }}/custom/{{ awtrix_custom_app_name }}"
-      payload: '{{ payload }}'
+      payload: "{{ payload }}"
