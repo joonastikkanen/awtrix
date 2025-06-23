@@ -1,0 +1,7 @@
+paho-mqtt
+yamllint
+requests
+pytz
+jinja2
+pip
+lxml

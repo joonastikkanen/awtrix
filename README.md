@@ -30,3 +30,9 @@ command_line:
     command: python scripts/awtrix/nameday_ha_sensor.py scripts/awtrix/files/namedays.csv
     scan_interval: 43200 # update twice a day
 ```
+
+## Ubuntu python packages
+
+```bash
+$ sudo apt install python3-paho-mqtt python3-yaml python3-requests python3-pytz python3-jinja2 python3-lxml 
+```
