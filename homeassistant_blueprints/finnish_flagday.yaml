@@ -39,12 +39,16 @@ variables:
   flagday: '{{states(sensor) | string }}'
   flagday_color: !input flagday_color
   repeat: !input repeat
-  payload: |-
-    {
-      "icon": "10076",
-      "text": "{{ flagday | string}}",
-      "repeat": {{ repeat }}
-    }
+  payload: >-
+    {% if flagday == "Ei lipputuspäivää tänään." %}
+      {}
+    {% else %}
+      {
+        "icon": "10076",
+        "text": "{{ flagday | string}}",
+        "repeat": {{ repeat }}
+      }
+    {% endif %}
 trigger:
 - platform: state
   entity_id: !input sensor
