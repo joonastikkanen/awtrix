@@ -68,9 +68,9 @@ variables:
         "icon": "{{ icon | string }}",
         "text": "{{ text | string}}",
         "color": "{{ color | string }}",
-        "repeat": {{ repeat }},
+        "repeat": {{ repeat | int }},
         "pushIcon": 2,
-        "scrollSpeed": {{ scroll_speed }}
+        "scrollSpeed": {{ scroll_speed | int }}
       }
 trigger:
 - platform: state
