@@ -75,5 +75,5 @@ action:
     data:
       qos: 0
       retain: false
-      topic: "{{ awtrix_display }}/custom/linkki_next_bus"
+      topic: "{{ awtrix_display }}/custom/nextbus"
       payload: '{{ payload }}'
