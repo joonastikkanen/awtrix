@@ -58,7 +58,7 @@ variables:
   device_id: !input awtrix
   sensor: !input sensor
   awtrix_display: "{{ iif( device_attr(device_id, 'name_by_user') != none, device_attr(device_id, 'name_by_user'), device_attr(device_id, 'name') ) | string }}"
-  text: "Seuraavaan bussiin aikaa {{ states(sensor) | string }} minuuttia. Tämän jälkeen seuraavat bussit: {% for departure in state_attr(sensor, 'departures')[1:] %} {{ departure.route }}: {{ as_datetime(departure.realtimeDeparture).strftime('%H:%M') }}{% endfor %}"
+  text: "Seuraava linkki {{ states(sensor) | string }} minuuttin kuluuttua. Seuraavat bussit: {% for departure in state_attr(sensor, 'departures')[1:] %}, {{ departure.route }}: {{ as_datetime(departure.realtimeDeparture).strftime('%H:%M') }}{% endfor %}"
   repeat: !input repeat
   icon: !input icon
   color: !input color
@@ -67,6 +67,7 @@ variables:
       {
         "icon": "{{ icon | string }}",
         "text": "{{ text | string}}",
+        "textCase": 2,
         "color": "{{ color | string }}",
         "repeat": {{ repeat | int }},
         "pushIcon": 2,
