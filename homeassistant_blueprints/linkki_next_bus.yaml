@@ -36,6 +36,12 @@ blueprint:
       selector:
         text:
       default: "11999"  # Default icon for bus
+    color:
+      name: Color
+      description: "The color of the text"
+      selector:
+        text:
+      default: "005EB8"
     scroll_speed:
       name: Scroll Speed
       description: How fast the message should scroll
@@ -55,11 +61,12 @@ variables:
   text: "Seuraavaan bussiin aikaa {{ states(sensor) | string }} minuuttia. Tämän jälkeen seuraavat bussit: {% for departure in state_attr(sensor, 'departures')[1:] %} {{ departure.route }}: {{ as_datetime(departure.realtimeDeparture).strftime('%H:%M') }}{% endfor %}"
   repeat: !input repeat
   icon: !input icon
+  color: !input color
   payload: >-
       {
         "icon": "{{ icon | string }}",
         "text": "{{ text | string}}",
-        "color": "#005EB8",
+        "color": "{{ color | string }}",
         "repeat": {{ repeat }},
         "pushIcon": 2,
         "scrollSpeed": {{ scroll_speed }}
