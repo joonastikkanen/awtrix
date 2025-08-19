@@ -62,6 +62,7 @@ variables:
   repeat: !input repeat
   icon: !input icon
   color: !input color
+  scroll_speed: !input scroll_speed
   payload: >-
       {
         "icon": "{{ icon | string }}",
