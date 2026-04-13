@@ -32,7 +32,12 @@ blueprint:
         entity:
           include_entities:
             - weather.forecast_home
+<<<<<<< HEAD
             - weather.openweathermap
+=======
+            - sensor.openweathermap_condition
+            - sensor.openweathermap_forecast_condition
+>>>>>>> 9dbf8e9 (update weather blueprint)
           multiple: false
     repeat:
       name: Repeat
@@ -56,6 +61,15 @@ blueprint:
           step: 10.0
           mode: slider
       default: 80
+<<<<<<< HEAD
+=======
+    weather_unit:
+      name: Weather unit
+      description: The unit of the temperature
+      selector:
+        text: {}
+      default: °C
+>>>>>>> 9dbf8e9 (update weather blueprint)
   source_url: https://github.com/joonastikkanen/awtrix/blob/main/homeassistant_blueprints%2Fweather.yaml
 mode: restart
 variables:
@@ -68,10 +82,16 @@ variables:
   weather_text: !input weather_text
   weather_sensor: !input weather_sensor
   weather_condition: "{{states(weather_sensor) | string }}"
+<<<<<<< HEAD
   weather_temp: "{{ state_attr(weather_sensor, 'temperature')}}"
   weather_unit: "{{ state_attr(weather_sensor, 'temperature_unit')}}"
   scroll_speed: !input scroll_speed
   payload: "{\n  \"text\": '{{ weather_text }} {{ weather_condition }}, {{ weather_temp }} {{ weather_unit }}',\n  \"repeat\": {{repeat}},\n  \"scrollSpeed\": {{ scroll_speed }}\n}"
+=======
+  weather_unit: !input weather_unit
+  scroll_speed: !input scroll_speed
+  payload: "{\n  \"text\": '{{ weather_text }} {{ weather_condition }}',\n  \"repeat\": {{repeat}},\n  \"scrollSpeed\": {{ scroll_speed }}\n}"
+>>>>>>> 9dbf8e9 (update weather blueprint)
 triggers:
   - trigger: state
     entity_id: !input weather_sensor
